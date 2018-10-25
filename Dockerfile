@@ -6,7 +6,7 @@ FROM mback2k/windows-buildbot-worker:${BASE_TAG}
 
 SHELL ["powershell", "-command"]
 
-ARG GIT_X64="https://github.com/git-for-windows/git/releases/download/v2.18.0.windows.1/Git-2.18.0-64-bit.exe"
+ARG GIT_X64="https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/Git-2.19.1-64-bit.exe"
 ADD ${GIT_X64} C:\Windows\Temp\Git-64-bit.exe
 
 RUN Start-Process -FilePath "C:\Windows\Temp\Git-64-bit.exe" -ArgumentList /VERYSILENT, /NORESTART, /NOCANCEL, /SP- -NoNewWindow -PassThru -Wait; `
