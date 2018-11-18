@@ -35,3 +35,15 @@ RUN Start-Process -FilePath "C:\Windows\Temp\stunnel-win32-installer.exe" -Argum
 RUN Write-Host 'Updating PATH ...'; `
     $env:PATH = 'C:\Program Files (x86)\stunnel\bin;' + $env:PATH; `
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
+
+ARG OPENSSH_WIN64="https://github.com/PowerShell/Win32-OpenSSH/releases/download/v7.7.2.0p1-Beta/OpenSSH-Win64.zip"
+ADD ${OPENSSH_WIN64} C:\Windows\Temp\OpenSSH-Win64.zip
+
+RUN Start-Process -FilePath "C:\Program` Files\7-Zip\7z.exe" -ArgumentList x, "C:\Windows\Temp\OpenSSH-Win64.zip", `-oC:\OpenSSH -NoNewWindow -PassThru -Wait; `
+    Remove-Item @('C:\Windows\Temp\*', 'C:\Users\*\Appdata\Local\Temp\*') -Force -Recurse; `
+    Write-Host 'Checking PATH ...'; `
+    Get-Item -Path 'C:\OpenSSH\OpenSSH-Win64';
+
+RUN Write-Host 'Updating PATH ...'; `
+    $env:PATH = 'C:\OpenSSH\OpenSSH-Win64;' + $env:PATH; `
+    [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
