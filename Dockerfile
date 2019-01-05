@@ -47,3 +47,14 @@ RUN Start-Process -FilePath "C:\Program` Files\7-Zip\7z.exe" -ArgumentList x, "C
 RUN Write-Host 'Updating PATH ...'; `
     $env:PATH = 'C:\OpenSSH\OpenSSH-Win64;' + $env:PATH; `
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
+
+ARG VCREDIST_2012_X64="https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe"
+ADD ${VCREDIST_2012_X64} C:\Windows\Temp\vcredist_x64.exe
+
+RUN Start-Process -FilePath "C:\Windows\Temp\vcredist_x64.exe" -ArgumentList /passive, /norestart -NoNewWindow -PassThru -Wait; `
+    Remove-Item @('C:\Windows\Temp\*', 'C:\Users\*\Appdata\Local\Temp\*') -Force -Recurse; `
+    Write-Host 'Checking MSVCR110 ...'; `
+    Get-Item -Path 'C:\Windows\system32\msvcr110.dll';
+
+ARG GROUP_JOB_X64="https://github.com/mback2k/group-job/releases/download/v0.1/group-job-x64.exe"
+ADD ${GROUP_JOB_X64} C:\Windows\system32\group-job.exe
