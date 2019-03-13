@@ -17,7 +17,13 @@ ARG IS_UNICODE="http://www.jrsoftware.org/download.php/is-unicode.exe"
 
 RUN Invoke-WebRequest $env:IS_UNICODE -OutFile "C:\Windows\Temp\is-unicode.exe"; `
     Start-Process -FilePath "C:\Windows\Temp\is-unicode.exe" -ArgumentList /VERYSILENT, /NORESTART, /NOCANCEL, /SP- -NoNewWindow -PassThru -Wait; `
-    Remove-Item @('C:\Windows\Temp\*', 'C:\Users\*\Appdata\Local\Temp\*') -Force -Recurse;
+    Remove-Item @('C:\Windows\Temp\*', 'C:\Users\*\Appdata\Local\Temp\*') -Force -Recurse; `
+    Write-Host 'Checking PATH ...'; `
+    Get-Item -Path 'C:\Program Files (x86)\Inno Setup 5';
+
+RUN Write-Host 'Updating PATH ...'; `
+    $env:PATH = 'C:\Program Files (x86)\Inno Setup 5;' + $env:PATH; `
+    [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
 
 ARG P7Z_X64="http://www.7-zip.org/a/7z1604-x64.exe"
 
