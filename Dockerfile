@@ -13,7 +13,7 @@ RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tl
     Start-Process -FilePath "C:\Windows\Temp\Git-64-bit.exe" -ArgumentList /VERYSILENT, /NORESTART, /NOCANCEL, /SP- -NoNewWindow -PassThru -Wait; `
     Remove-Item @('C:\Windows\Temp\*', 'C:\Users\*\Appdata\Local\Temp\*') -Force -Recurse;
 
-ARG IS_UNICODE="http://www.jrsoftware.org/download.php/is-unicode.exe"
+ARG IS_UNICODE="http://files.jrsoftware.org/is/5/innosetup-5.6.1-unicode.exe"
 
 RUN Invoke-WebRequest $env:IS_UNICODE -OutFile "C:\Windows\Temp\is-unicode.exe"; `
     Start-Process -FilePath "C:\Windows\Temp\is-unicode.exe" -ArgumentList /VERYSILENT, /NORESTART, /NOCANCEL, /SP- -NoNewWindow -PassThru -Wait; `
@@ -31,7 +31,7 @@ RUN Invoke-WebRequest $env:P7Z_X64 -OutFile "C:\Windows\Temp\7z1604-x64.exe"; `
     Start-Process -FilePath "C:\Windows\Temp\7z1604-x64.exe" -ArgumentList /S -NoNewWindow -PassThru -Wait; `
     Remove-Item @('C:\Windows\Temp\*', 'C:\Users\*\Appdata\Local\Temp\*') -Force -Recurse;
 
-ARG STUNNEL="https://www.stunnel.org/downloads/stunnel-5.50-win64-installer.exe"
+ARG STUNNEL="https://www.stunnel.org/downloads/stunnel-5.53-win64-installer.exe"
 
 RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
     Invoke-WebRequest $env:STUNNEL -OutFile "C:\Windows\Temp\stunnel-win64-installer.exe"; `
