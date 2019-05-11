@@ -6,7 +6,7 @@ FROM mback2k/windows-buildbot-worker:${BASE_TAG}
 
 SHELL ["powershell", "-command"]
 
-ARG GIT_X64="https://github.com/git-for-windows/git/releases/download/v2.19.1.windows.1/Git-2.19.1-64-bit.exe"
+ARG GIT_X64="https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/Git-2.21.0-64-bit.exe"
 
 RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
     Invoke-WebRequest $env:GIT_X64 -OutFile "C:\Windows\Temp\Git-64-bit.exe"; `
@@ -44,7 +44,7 @@ RUN Write-Host 'Updating PATH ...'; `
     $env:PATH = 'C:\Program Files (x86)\stunnel\bin;' + $env:PATH; `
     [Environment]::SetEnvironmentVariable('PATH', $env:PATH, [EnvironmentVariableTarget]::Machine);
 
-ARG OPENSSH_WIN64="https://github.com/PowerShell/Win32-OpenSSH/releases/download/v7.7.2.0p1-Beta/OpenSSH-Win64.zip"
+ARG OPENSSH_WIN64="https://github.com/PowerShell/Win32-OpenSSH/releases/download/v7.9.0.0p1-Beta/OpenSSH-Win64.zip"
 
 RUN [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; `
     Invoke-WebRequest $env:OPENSSH_WIN64 -OutFile "C:\Windows\Temp\OpenSSH-Win64.zip"; `
