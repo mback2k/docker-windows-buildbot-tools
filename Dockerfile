@@ -1,8 +1,9 @@
 # escape=`
 
+ARG BASE_IMAGE=mback2k/windows-buildbot-worker
 ARG BASE_TAG=latest_1803
 
-FROM mback2k/windows-buildbot-worker:${BASE_TAG}
+FROM ${BASE_IMAGE}:${BASE_TAG}
 
 ARG GIT_X64="https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/Git-2.21.0-64-bit.exe"
 
